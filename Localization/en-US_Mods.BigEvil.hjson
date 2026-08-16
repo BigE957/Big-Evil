@@ -1,0 +1,17 @@
+NPCs: {
+	BrainIllusion.DisplayName: Brain Illusion
+	FalseBrain.DisplayName: False Brain
+	BloodBomb.DisplayName: Blood Bomb
+}
+
+Projectiles: {
+	Boss: {
+		BloodBombRTS.DisplayName: Blood Bomb R T S
+		BloodScythe.DisplayName: Blood Scythe
+		CirclingBloodScythe.DisplayName: Circling Blood Scythe
+		CrimsonEye.DisplayName: Crimson Eye
+		IchorShower.DisplayName: Ichor Shower
+		TelekineticBlast.DisplayName: Telekinetic Blast
+		TelekineticEnemyGrab.DisplayName: Telekinetic Enemy Grab
+	}
+}

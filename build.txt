@@ -1,0 +1,3 @@
+displayName = Big Evils (Name Pending)
+author = Big E
+version = 0.1
