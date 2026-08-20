@@ -286,6 +286,8 @@ public class BrainOfCthulhuAI : VanillaAIOverride
         ShieldScale = 1f;
         BrainOfCthulhuSystem.ScreenBlurStrength = 0f;
 
+        NPC.BossBar = ModContent.GetInstance<BrainOfCthulhuBossBar>();
+
         if (!Main.dedServ)
         {
             int brainOfCthuluCreepersCount = GetBrainOfCthuluCreepersCount();
