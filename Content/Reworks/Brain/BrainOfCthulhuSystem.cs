@@ -120,8 +120,13 @@ public class BrainOfCthulhuSystem : ModSystem
         if (num == 200 || num == -1)
             return;
 
-        if (Main.player[targetPlayerIndex].HeldItem.type == ItemID.BloodySpine)
-            BrainOfCthulhuAI.SummonedViaItem = true;
+        if (Main.npc[num].TryGetAIOverride<BrainOfCthulhuAI>(out var brainAI))
+        {
+            brainAI.WasSummonedViaItem = Main.player[targetPlayerIndex].HeldItem.type == ItemID.BloodySpine;
+            brainAI.SpawnDelay = brainAI.WasSummonedViaItem ? 2 : 60;
+            if (brainAI.WasSummonedViaItem)
+                brainAI.SpawnTime = -1;
+        }
 
         NPC.crimsonBoss = num;
         Main.npc[num].target = targetPlayerIndex;
@@ -228,8 +233,6 @@ public class BrainOfCthulhuSystem : ModSystem
     {
         if (VerletTendrils is null)
             return;
-        if (!NPC.AnyNPCs(NPCID.BrainofCthulhu))
-            BrainOfCthulhuAI.SummonedViaItem = false;
 
         if (Main.netMode != NetmodeID.Server)
         {
@@ -245,7 +248,7 @@ public class BrainOfCthulhuSystem : ModSystem
 
                     Vector2 startPoint = Main.npc[NPC.crimsonBoss].Center + Main.npc[NPC.crimsonBoss].netOffset + Vector2.UnitY * 32;
 
-                    float creeperRatio = index / (float)BrainOfCthulhuAI.GetBrainOfCthuluCreepersCountRevDeath();
+                    float creeperRatio = index / (float)BrainOfCthulhuAI.GetBrainOfCthuluCreepersCount();
                     if (index % 2 == 0)
                         startPoint += new Vector2(MathHelper.Lerp(-24, 0, creeperRatio), 0);
                     else

@@ -51,15 +51,15 @@ public class CreeperAI : VanillaAIOverride
         get
         {
             int c = NPC.CountNPCS(NPC.type);
-            if (c > GetBrainOfCthuluCreepersCountRevDeath())
-                c = GetBrainOfCthuluCreepersCountRevDeath();
+            if (c > GetBrainOfCthuluCreepersCount())
+                c = GetBrainOfCthuluCreepersCount();
             return c;
         }
     }
 
     int localCreeperID => Main.npc.Where(n => n.active && n.type == NPCID.Creeper).ToList().IndexOf(NPC);
 
-    float CreeperAmountRatio => creeperCount / (float)GetBrainOfCthuluCreepersCountRevDeath();
+    float CreeperAmountRatio => creeperCount / (float)GetBrainOfCthuluCreepersCount();
 
     bool useBossAIState = true;
 
@@ -166,7 +166,7 @@ public class CreeperAI : VanillaAIOverride
 
     private void SpawnAnimation()
     {
-        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCountRevDeath() / 2f) * (CreeperID / 2f);
+        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCount() / 2f) * (CreeperID / 2f);
         Vector2 goalLocation;
         float speedCap = 8f;
         float accel = 1f;
@@ -175,7 +175,7 @@ public class CreeperAI : VanillaAIOverride
 
         if (bocAI.SpawnTime != 0 && Time >= 0) //Brain has appeared
         {
-            float spawnAnimTimeReduction = SummonedViaItem  ? 120 : 0;
+            float spawnAnimTimeReduction = bocAI.WasSummonedViaItem ? 120 : 0;
             float brainTime = bossCounter - Math.Abs(bocAI.SpawnTime) + spawnAnimTimeReduction;
 
             if (brainTime < 180)
@@ -276,7 +276,7 @@ public class CreeperAI : VanillaAIOverride
                 Time = -1;
         }
 
-        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCountRevDeath() / 2f) * (CreeperID / 2f);
+        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCount() / 2f) * (CreeperID / 2f);
         bool singleHand = bocAI.AttackFlag;
         int handSide = bocAI.AttackSign;
 
@@ -632,7 +632,7 @@ public class CreeperAI : VanillaAIOverride
         AttackAngle += angularVelocity;
 
         float goalRadius = TendrilStartDistance + (TendrilLength * placementRatio);
-        goalRadius += (float)Math.Sin(bossCounter / 20f) * MathHelper.Lerp(MaxCreeperSway, 0, groupCount / (float)(GetBrainOfCthuluCreepersCountRevDeath() / 3)) * (index % 2 == 0 ? -1 : 1);
+        goalRadius += (float)Math.Sin(bossCounter / 20f) * MathHelper.Lerp(MaxCreeperSway, 0, groupCount / (float)(GetBrainOfCthuluCreepersCount() / 3)) * (index % 2 == 0 ? -1 : 1);
 
         Vector2 angleVec = AttackAngle.ToRotationVector2();
         Vector2 position = brain.Center + (angleVec * goalRadius);
@@ -676,7 +676,7 @@ public class CreeperAI : VanillaAIOverride
         NPC.knockBackResist = 0.72f;
         NPC.damage = 0;
 
-        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCountRevDeath() / 2f) * (CreeperID / 2f);
+        float baseRotation = MathHelper.TwoPi / (GetBrainOfCthuluCreepersCount() / 2f) * (CreeperID / 2f);
         Vector2 goalLocation = brain.Center + (Vector2.UnitX * (evenID ? -256 : 256)) + Vector2.UnitX.RotatedBy(baseRotation + (bossCounter / 60f * (evenID ? -1 : 1))) * 64;
         if (NPC.DistanceSQ(goalLocation) > 9216)
         {
