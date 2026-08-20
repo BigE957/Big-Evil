@@ -1710,7 +1710,7 @@ public class BrainOfCthulhuAI : VanillaAIOverride
                         NPC.rotation = 0;
                         ResetAttackValues();
 
-                        if (!ForcedIllusionAttack && (NPC.life / (float)NPC.lifeMax) <= ForcedIllusionHealthGate)
+                        if (Main.expertMode && !ForcedIllusionAttack && (NPC.life / (float)NPC.lifeMax) <= ForcedIllusionHealthGate)
                         {
                             ForcedIllusionAttack = true;
                             AIState = BrainAIState.IllusionTrick;
@@ -1726,8 +1726,9 @@ public class BrainOfCthulhuAI : VanillaAIOverride
                                         quickChoice ? BrainAIState.SanguineScythes : BrainAIState.IllusionDash,
                                         Main.rand.NextBool() ? BrainAIState.Phase2Idle : BrainAIState.Bloodletting,
                                         quickChoice ? BrainAIState.IllusionDash : BrainAIState.SanguineScythes,
-                                        BrainAIState.IllusionTrick
                                 ];
+                                if(Main.expertMode)
+                                    availableAttacks.Add(BrainAIState.IllusionTrick);
                             }
 
                             AIState = availableAttacks[0];
